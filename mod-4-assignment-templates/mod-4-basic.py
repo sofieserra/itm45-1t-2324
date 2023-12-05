@@ -33,7 +33,24 @@ def savings(gross_pay, tax_rate, expenses):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+def savings(gross_pay, tax_rate, expenses):
+    if tax_rate < 0 or tax_rate > 1:
+        raise ValueError("Tax rate must be between 0 and 1")
+    tax_amount= int(gross_pay * tax_rate)
+    after_tax_pay = gross_pay - tax_amount
+    remaining = after_tax_pay - expenses
+    return int(remaining)
+
+gross_pay = int(input("Input the gross pay in centavos:"))
+tax_rate = float(input("Input the current tax rate:"))
+while tax_rate < 0 or tax_rate > 1:
+    print("Tax rate must be between 0 and 1")
+    tax_rate = float(input("Input the current tax rate:"))
+expenses = int(input("Input the expenses in centavos:"))
+
+result = savings(gross_pay, tax_rate, expenses)
+print("The remaining amount of savings after taxes and expenses are deducted is",result,"centavos")
 
 def material_waste(total_material, material_units, num_jobs, job_consumption):
     '''Material Waste.
@@ -68,7 +85,21 @@ def material_waste(total_material, material_units, num_jobs, job_consumption):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+def material_waste(total_material, material_units, num_jobs, job_consumption):
+    total_consumed = num_jobs * job_consumption
+    remaining_material = total_material - total_consumed
+    output = f"{remaining_material}{material_units}"
+    
+    return str(output)
+
+total_material = int(input("Enter the total material available:"))
+material_units = str(input("Enter the units used to express the material (e.g, 'kg', 'L', etc.):"))
+num_jobs = int(input("Enter the number of jobs to run:"))
+job_consumption = int(input("Enter the amount of material consumed per job:"))
+
+result = material_waste(total_material, material_units, num_jobs, job_consumption)
+print(f"The amount of remaining material:",result)
 
 def interest(principal, rate, periods):
     '''Interest.
@@ -98,7 +129,22 @@ def interest(principal, rate, periods):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+import math
+
+def interest(principal, rate, periods):
+    interest_amount = int(principal * rate * periods)
+    final_value = principal + interest_amount
+    final_value = math.floor(final_value)
+    
+    return int(final_value)
+
+principal = int(input("Enter the principal amount invested in centavos:"))
+rate = float(input("Enter the interest rate per period (as a decimal):"))
+periods = int(input("Enter the number of periods invested:"))
+
+result = interest(principal, rate, periods)
+print(f"The final value of the investment is:",result,"centavos")
 
 def body_mass_index(weight, height):
     '''Body Mass Index.
@@ -130,4 +176,18 @@ def body_mass_index(weight, height):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+
+def body_mass_index(weight,height):
+    weight_kg = weight * 0.453592 # 1 pound = 0.453592kg
+    height_meters = (height[0] * 12 + height [1]) * 0.0254 # 1 inch = 0.0254m
+    bmi = weight_kg / (height_meters ** 2)
+    
+    return float(bmi)
+
+weight = float(input("Enter weight in pounds:"))
+feet = int(input("Enter height in feet:"))
+inches = int(input("Enter height in inches:"))
+height = [feet, inches]
+
+result = body_mass_index(weight,height)
+print(f"Your BMI is:",result)
