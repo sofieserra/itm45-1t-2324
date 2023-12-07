@@ -176,7 +176,7 @@ def vigenere_cipher(message, key):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
 def vigenere_cipher(message,key):
-    key = key.upper()
+    key = key.upper().replace(" ","")
     encrypted_message = " "
     
     extended_key = (key * (len(message) // len(key))) + key[:len(message) % len(key)]
@@ -199,7 +199,7 @@ def vigenere_cipher(message,key):
     return str(encrypted_message)
 
 message = str(input("Enter the message to encrypt with uppercase English letters and spaces:"))
-key = str(input("Enter the key (a word or phrase):"))
+key = str(input("Enter the key (a word or phrase that is not longer than the message):"))
 
 encrypted_message = vigenere_cipher(message,key)
 print("The encrypted message is:", encrypted_message)
