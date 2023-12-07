@@ -37,7 +37,19 @@ def shift_letter(letter, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+ def shift_letter(letter,shift):
+    if letter == " ":
+        return " "
+    shifted = (ord(letter) - 65 + shift) % 26
+    shifted_letter = chr(shifted + 65)
+    
+    return str(shifted_letter)
+
+letter = str(input("Enter a single uppercase English letter or a space:"))
+shift = int(input("Enter the number by which to shift the letter:"))
+
+result = shift_letter(letter,shift)
+print("The shifted letter is:",result)
 
 def caesar_cipher(message, shift):
     '''Caesar Cipher. 
@@ -59,7 +71,29 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def caesar_cipher(message,shift):
+    shifted_message = ""
+    
+    for char in message:
+        if char.isalpha():
+            is_uppercase = char.isupper()
+            char = char.upper()
+            
+            shifted = ord(char) + shift - ord('A')
+            shifted %= 26
+            shifted_char = chr(shifted + ord('A'))
+                
+            shifted_message += shifted_char
+        else:
+            shifted_message += char
+            
+    return str(shifted_message)
+
+message = str(input("Enter the message you want to encrypt in upper case letters:"))
+shift = int(input("Enter the number by which to shift the letters:"))
+
+encrypted_result = caesar_cipher(message,shift)
+print("The encrypted message is:",encrypted_result)
 
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter. 
@@ -89,7 +123,26 @@ def shift_by_letter(letter, letter_shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def shift_by_letter(letter, letter_shift):
+    if letter == "":
+        return ""
+    
+    letter = letter.upper()
+    letter_shift = letter_shift.upper()
+    
+    letter_value_equivalent = ord(letter) - ord('A')
+    shift_value_equivalent = ord(letter_shift) - ord('A')
+    
+    shifted = (letter_value_equivalent + shift_value_equivalent) % 26
+    shifted_letter = chr(shifted + ord('A'))
+    
+    return str(shifted_letter)
+
+letter = str(input("Enter a single uppercase English letter or a space:"))
+letter_shift = str(input("Enter a single uppercase English letter for shifting:"))
+
+shifted_letter = shift_by_letter(letter, letter_shift)
+print("The shifted letter is:", shifted_letter)
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher. 
@@ -122,4 +175,31 @@ def vigenere_cipher(message, key):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def vigenere_cipher(message,key):
+    key = key.upper()
+    encrypted_message = " "
+    
+    extended_key = (key * (len(message) // len(key))) + key[:len(message) % len(key)]
+    
+    for i, char in enumerate(message):
+        if char != " ":
+            char = char.upper()
+            shift = ord(extended_key[i]) - ord('A')
+            
+            shifted = (ord(char) - ord('A') + shift) % 26
+            encrypted_char = chr(shifted + ord('A'))
+            
+            if message[i].islower():
+                encrypted_char = encrypted_char.lower()
+                
+            encrypted_message += encrypted_char
+        else:
+            encrypted_message += " "
+            
+    return str(encrypted_message)
+
+message = str(input("Enter the message to encrypt with uppercase English letters and spaces:"))
+key = str(input("Enter the key (a word or phrase):"))
+
+encrypted_message = vigenere_cipher(message,key)
+print("The encrypted message is:", encrypted_message)
