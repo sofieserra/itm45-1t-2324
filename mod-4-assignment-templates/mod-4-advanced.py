@@ -41,8 +41,74 @@ def relationship_status(from_member, to_member, social_graph):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    def relationship_status(from_member, to_member, social_graph):
+    if from_member in social_graph and to_member in social_graph:
+        if to_member in social_graph[from_member]["following"] and from_member in social_graph[to_member]["following"]:
+            return str("friends")
+        elif to_member in social_graph[from_member]["following"]:
+            return str("follower")
+        elif from_member in social_graph[to_member]["following"]:
+            return str("followed by")
 
+    return str("no relationship")
+
+social_graph = {
+    "@bongolpoc":{"first_name":"Joselito",
+                  "last_name":"Olpoc",
+                  "following":[
+                  ]
+    },
+    "@joaquin":  {"first_name":"Joaquin",
+                  "last_name":"Gonzales",
+                  "following":[
+                      "@chums","@jobenilagan"
+                  ]
+    },
+    "@chums" : {"first_name":"Matthew",
+                "last_name":"Uy",
+                "following":[
+                    "@bongolpoc","@miketan","@rudyang","@joeilagan"
+                ]
+    },
+    "@jobenilagan":{"first_name":"Joben",
+                   "last_name":"Ilagan",
+                   "following":[
+                    "@eeebeee","@joeilagan","@chums","@joaquin"
+                   ]
+    },
+    "@joeilagan":{"first_name":"Joe",
+                  "last_name":"Ilagan",
+                  "following":[
+                    "@eeebeee","@jobenilagan","@chums"
+                  ]
+    },
+    "@eeebeee":  {"first_name":"Elizabeth",
+                  "last_name":"Ilagan",
+                  "Following":[
+                    "@jobenilagan","@joeilagan"
+                  ]
+    },
+}
+
+def get_user_details(username, social_graph):
+    if username in social_graph:
+        user_details = social_graph[username]
+        return user_details["first_name"], user_details["last_name"]
+    else:
+        return None, None
+
+from_member_username = str(input("Enter the first member's username:"))
+from_first_name, from_last_name = get_user_details(from_member_username, social_graph)
+
+to_member_username = str(input("Enter the second member's username:"))
+to_first_name, to_last_name = get_user_details(to_member_username, social_graph)
+
+relationship = relationship_status(from_member_username, to_member_username, social_graph)
+
+if from_first_name and from_last_name and to_first_name and to_last_name:
+    print("The relationship between", from_first_name, from_last_name, "and", to_first_name, to_last_name, "is:", relationship)
+else:
+    print("One or more members not found.")
 
 def tic_tac_toe(board):
     '''Tic Tac Toe. 
@@ -55,7 +121,7 @@ def tic_tac_toe(board):
     This function evaluates a tic tac toe board and returns the winner.
 
     Please see "assignment-4-sample-data.py" for sample data. The board will adhere
-    to the same pattern. The board may by 3x3, 4x4, 5x5, or 6x6. The board will never
+    to the same pattern. The board may be 3x3, 4x4, 5x5, or 6x6. The board will never
     have more than one winner. The board will only ever have 2 unique symbols at the same time.
 
     Parameters
