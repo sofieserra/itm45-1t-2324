@@ -136,7 +136,83 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+def tic_tac_toe(board):
+    winner = check_rows(board)
+    if not winner:
+        winner = check_columns(board)
+    if not winner:
+        winner = check_diagonals(board)
+    return str(winner) if winner is not None else "NO WINNER"
+
+def check_rows(board):
+    for row in board:
+        if len(set(row)) == 1:
+            return row[0]
+    return None
+
+def check_columns(board):
+    for col in range(len(board)):
+        column_values = [board[row][col] for row in range(len(board))]
+        if len(set(column_values)) == 1:
+            return column_values[0]
+    return None
+
+def check_diagonals(board):
+    diagonal1 = [board[i][i] for i in range(len(board))]
+    diagonal2 = [board[i][len(board) - 1 - i] for i in range(len(board))]
+    if len(set(diagonal1)) == 1:
+        return diagonal1[0]
+    elif len(set(diagonal2)) == 1:
+        return diagonal2[0]
+    return None
+board1 = [
+['X','X','O'],
+['O','X','O'],
+['O','','X'],
+]
+
+board2 = [
+['X','X','O'],
+['O','X','O'],
+['','O','X'],
+]
+
+board3 = [
+['O','X','O'],
+['','O','X'],
+['X','X','O'],
+]
+
+board4 = [
+['X','X','X'],
+['O','X','O'],
+['O','','O'],
+]
+
+board5 = [
+['X','X','O'],
+['O','X','O'],
+['X','','O'],
+]
+
+board6 = [
+['X','X','O'],
+['O','X','O'],
+['X','',''],
+]
+
+board7 = [
+['X','X','O',''],
+['O','X','O','O'],
+['X','','','O'],
+['O','X','','']
+]
+
+boards = [board1, board2, board3, board4, board5, board6, board7]
+
+for idx, board in enumerate(boards, start=1):
+    result = tic_tac_toe(board)
+    print(f"Board {idx}: Winner - {result}")
 
 def eta(first_stop, second_stop, route_map):
     '''ETA. 
