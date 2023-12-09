@@ -245,4 +245,85 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    def eta(first_stop, second_stop, route_map):
+    def find_route(start,end):
+        current_stop = start
+        total_time = 0
+        stops_visited = set()
+    
+        while True:
+            leg = (current_stop, end)
+            if leg in route_map:
+                total_time += route_map[leg]['travel_time_mins']
+                break
+
+            stops_visited.add(current_stop)
+            next_stop_found = False
+
+            for leg_key in route_map:
+                if leg_key[0] == current_stop:
+                    next_stop = leg_key[1]
+                    if next_stop in stops_visited:
+                        return "Route not found between stops"
+                    total_time += route_map[leg_key]['travel_time_mins']
+                    current_stop = next_stop
+                    next_stop_found = True
+                    break
+
+            if not next_stop_found:
+                return "Route not found between stops"
+
+            if current_stop == end and total_time > 0:
+                break
+
+        return total_time
+
+    result_forward = find_route(first_stop, second_stop)
+    result_backward = find_route(second_stop, first_stop)
+
+    if isinstance(result_forward, int):
+        return result_forward
+    elif isinstance(result_backward, int):
+        return result_backward
+    else:
+        return "Route not found between stops"
+
+legs1 = {
+     ('upd','admu'):{
+         'travel_time_mins': 10
+     },
+     ('admu','dlsu'):{
+         'travel_time_mins': 35
+     },
+     ('dlsu','upd'):{
+         'travel_time_mins': 55
+     }
+}
+
+legs2 = {
+    ('a1', 'a2'): {
+        'travel_time_mins': 10
+    },
+    ('a2', 'b1'): {
+        'travel_time_mins': 10230
+    },
+    ('b1', 'a1'): {
+        'travel_time_mins': 1
+    }
+}
+
+first_stop_input = input("Enter the starting stop:")
+second_stop_input = input("Enter the destination stop:")
+
+result1 = eta(first_stop_input, second_stop_input, legs1)
+result2 = eta(first_stop_input, second_stop_input, legs2)
+
+if isinstance(result1, int):
+    print(f"ETA from {first_stop_input} to {second_stop_input}: {result1} minutes")
+else:
+    print(result1)
+    
+if isinstance(result2, int):
+    print(f"ETA from {first_stop_input} to {second_stop_input}: {result1} minutes")
+elif result2 != "Route not found between stops":
+    print(result2)
