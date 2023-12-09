@@ -270,7 +270,7 @@ def eta(first_stop, second_stop, route_map):
                     return "Route not found between stops"
     
         if found_route:
-            return total
+            return total_time
 
 legs1 = {
      ('up,'admin):{
@@ -304,10 +304,10 @@ result2 = eta(first_stop_input, second_stop_input, legs2)
 
 if isinstance(result1, int):
     print(f"ETA from {first_stop_input} to {second_stop_input}: {result1} minutes")
-else:
+elif result1 != "Route not found between stops":
     print(result1)
     
 if isinstance(result2, int):
-    print(f"ETA from {first_stop_input} to {second_stop_input}: {result1} minutes")
+    print(f"ETA from {first_stop_input} to {second_stop_input}: {result2} minutes")
 elif result2 != "Route not found between stops":
     print(result2)
