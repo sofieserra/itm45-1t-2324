@@ -246,53 +246,37 @@ def eta(first_stop, second_stop, route_map):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     def eta(first_stop, second_stop, route_map):
-    def find_route(start,end):
-        current_stop = start
+        current_stop = first_stop
         total_time = 0
-        stops_visited = set()
-    
-        while True:
-            leg = (current_stop, end)
+        found_route = False
+        
+        while current_stop != second_stop:
+            leg = (current_stop, second_stop)
             if leg in route_map:
                 total_time += route_map[leg]['travel_time_mins']
+                found_route = True
                 break
-
-            stops_visited.add(current_stop)
-            next_stop_found = False
-
+    
+            leg_found = False
             for leg_key in route_map:
                 if leg_key[0] == current_stop:
                     next_stop = leg_key[1]
-                    if next_stop in stops_visited:
-                        return "Route not found between stops"
                     total_time += route_map[leg_key]['travel_time_mins']
                     current_stop = next_stop
-                    next_stop_found = True
+                    leg_found = True
                     break
-
-            if not next_stop_found:
-                return "Route not found between stops"
-
-            if current_stop == end and total_time > 0:
-                break
-
-        return total_time
-
-    result_forward = find_route(first_stop, second_stop)
-    result_backward = find_route(second_stop, first_stop)
-
-    if isinstance(result_forward, int):
-        return result_forward
-    elif isinstance(result_backward, int):
-        return result_backward
-    else:
-        return "Route not found between stops"
+    
+                if not leg_found:
+                    return "Route not found between stops"
+    
+        if found_route:
+            return total
 
 legs1 = {
-     ('upd','admu'):{
+     ('up,'admin):{
          'travel_time_mins': 10
      },
-     ('admu','dlsu'):{
+     ('admin,'dlsu'):{
          'travel_time_mins': 35
      },
      ('dlsu','upd'):{
